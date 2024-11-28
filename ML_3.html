@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Housing Price Prediction with Random Forest Regression</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; }
+        h1, h2, h3 { color: #007BFF; }
+        img { max-width: 100%; height: auto; }
+        .code-block { background: #f4f4f4; padding: 10px; border-left: 5px solid #007BFF; font-family: monospace; }
+        .note { font-style: italic; color: gray; }
+        .github-link { text-decoration: none; color: #ffffff; background-color: #007BFF; padding: 10px 15px; border-radius: 5px; }
+        .github-link:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Housing Price Prediction with Random Forest Regression</h1>
+            <p>An exploration of predicting housing prices in California using the Random Forest regression model and the California Housing dataset.</p>
+        </header>
+
+        <section id="introduction">
+            <h2>Introduction</h2>
+            <p>Data Science leverages machine learning techniques to predict, classify, and analyze patterns in datasets. Housing price prediction is a classic regression problem where various features of a house and its surroundings are used to estimate its value.</p>
+            <p>The California Housing dataset is widely used in predictive modeling for regression tasks. It contains data on average house prices, along with features such as average income, house age, and proximity to amenities. In this project, we explore how the Random Forest regression algorithm can predict housing prices with high accuracy.</p>
+            <img src="Screenshot 2024-11-28 163647.png" alt="Housing Price Trends" title="California Housing Trends">
+            <p class="note">Figure: Example trends in California housing prices based on features like income and location.</p>
+        </section>
+
+        <section id="dataset">
+            <h2>The California Housing Dataset</h2>
+            <p>The California Housing dataset provides information about houses in various California districts. It is a well-known dataset for regression analysis.</p>
+            <ul>
+                <li><strong>Number of Samples:</strong> 20,640 observations of housing data.</li>
+                <li><strong>Features:</strong> 8 predictors, including average income, house age, and number of rooms.</li>
+                <li><strong>Target:</strong> Median value of houses in $100,000s.</li>
+            </ul>
+        </section>
+
+        <section id="key-parameters">
+            <h2>Key Parameters of Random Forest Regression</h2>
+            <p>Random Forest regression uses an ensemble of decision trees to predict continuous variables. Key parameters include:</p>
+            <ul>
+                <li><strong>Number of Trees:</strong> The number of decision trees in the forest. More trees can improve accuracy but increase computation time.</li>
+                <li><strong>Max Depth:</strong> The maximum depth of each tree, which controls model complexity and overfitting.</li>
+                <li><strong>Features for Splitting:</strong> Randomly selected features for each split, which reduces overfitting and enhances generalization.</li>
+            </ul>
+        </section>
+
+        <section id="implementation">
+            <h2>Code Implementation</h2>
+            <p>The following Python code demonstrates how to build and train a Random Forest regression model to predict housing prices using the California Housing dataset:</p>
+            <div class="code-block">
+<pre>
+from sklearn.datasets import fetch_california_housing
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_squared_error, r2_score
+
+# Load the dataset
+data = fetch_california_housing(as_frame=True)
+df = data.frame
+
+# Split the data
+X = df.drop('MedHouseVal', axis=1)
+y = df['MedHouseVal']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Train the Random Forest model
+model = RandomForestRegressor(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+
+# Evaluate the model
+y_pred = model.predict(X_test)
+print("Mean Squared Error:", mean_squared_error(y_test, y_pred))
+print("R-squared:", r2_score(y_test, y_pred))
+</pre>
+            </div>
+            <p>This implementation uses scikit-learn to train and evaluate the Random Forest regression model on the California Housing dataset.</p>
+        </section>
+
+        <section id="analysis-results">
+            <h2>Analysis and Results</h2>
+            <p>The Random Forest regression model demonstrated high accuracy in predicting housing prices. Key metrics include:</p>
+            <ul>
+                <li><strong>Mean Squared Error (MSE):</strong> The average squared difference between predicted and actual values, reflecting prediction accuracy.</li>
+                <li><strong>R-squared:</strong> Indicates the proportion of variance in the target variable explained by the model.</li>
+            </ul>
+            <img src="Screenshot 2024-11-28 163946.png" alt="Regression Performance" title="Random Forest Regression Performance">
+            <p class="note">Figure: Predicted vs. actual housing prices in California districts.</p>
+        </section>
+
+        <section id="accuracy-challenges">
+            <h2>Accuracy and Challenges</h2>
+            <h3>Accuracy</h3>
+            <p>The Random Forest regression model achieved high accuracy due to its ability to capture complex relationships between predictors and the target variable. Key features such as average income and house age significantly influenced the predictions.</p>
+
+            <h3>Challenges</h3>
+            <ul>
+                <li><strong>Feature Importance:</strong> Some features, like proximity to amenities, may not significantly influence predictions, adding noise to the model.</li>
+                <li><strong>Computational Complexity:</strong> Training Random Forest models can be time-consuming for large datasets or many trees.</li>
+                <li><strong>Outliers:</strong> Extreme values in the dataset may affect prediction accuracy, requiring preprocessing steps like scaling or removal.</li>
+            </ul>
+        </section>
+
+        <section id="github">
+            <h2>GitHub Repository</h2>
+            <p>Explore the complete code and implementation on GitHub:</p>
+            <a href="https://github.com/Raghava200111/ML-Repository" target="_blank" class="github-link">View on GitHub</a>
+        </section>
+
+        <section id="conclusion">
+            <h2>Conclusion</h2>
+            <p>The California Housing dataset demonstrates the power of Random Forest regression in capturing complex relationships between features and housing prices. The model achieved high accuracy, highlighting the effectiveness of ensemble methods in predictive modeling.</p>
+            <p>Future improvements could include hyperparameter tuning, handling outliers, and exploring advanced techniques like Gradient Boosting for enhanced performance.</p>
+        </section>
+    </div>
+</body>
+</html>
